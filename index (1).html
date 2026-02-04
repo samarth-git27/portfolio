@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samarth Bharadwaj - Ancient Code Cave</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Cinzel:wght@400;700;900&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cave-dark: #2a1810;
+            --cave-brown: #4a3428;
+            --rock-gray: #6b5d54;
+            --sand-beige: #d4b896;
+            --ochre: #cc7722;
+            --burnt-sienna: #e97451;
+            --bone-white: #f5f1e8;
+            --charcoal: #1a1410;
+        }
+
+        body {
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(135deg, var(--cave-dark) 0%, var(--cave-brown) 100%);
+            color: var(--bone-white);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Cave texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(90deg, 
+                    rgba(0,0,0,0.05) 0px, 
+                    transparent 2px, 
+                    transparent 4px, 
+                    rgba(0,0,0,0.05) 6px),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Floating particles (dust/ash) */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        .particle {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: rgba(245, 241, 232, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2;
+            animation: float linear infinite;
+        }
+
+        /* Hero Section - Cave Entrance */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 3;
+            padding: 2rem;
+            background: radial-gradient(ellipse at center, rgba(42, 24, 16, 0.4) 0%, var(--cave-dark) 100%);
+        }
+
+        .cave-drawing {
+            position: absolute;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        /* Animated cave animals */
+        .mammoth {
+            top: 10%;
+            left: 5%;
+            font-size: 80px;
+            animation: walkRight 30s linear infinite;
+        }
+
+        .deer {
+            top: 70%;
+            right: 10%;
+            font-size: 60px;
+            animation: walkLeft 25s linear infinite;
+        }
+
+        .bird {
+            top: 20%;
+            right: 20%;
+            font-size: 40px;
+            animation: fly 20s ease-in-out infinite;
+        }
+
+        @keyframes walkRight {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(100vw); }
+        }
+
+        @keyframes walkLeft {
+            0% { transform: translateX(100vw) scaleX(-1); }
+            100% { transform: translateX(-100px) scaleX(-1); }
+        }
+
+        @keyframes fly {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-50px) translateX(-100px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 5;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-family: 'Caveat', cursive;
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 700;
+            color: var(--ochre);
+            text-shadow: 
+                3px 3px 0 var(--charcoal),
+                6px 6px 20px rgba(0,0,0,0.7);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            animation: flicker 3s ease-in-out infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; text-shadow: 3px 3px 0 var(--charcoal), 6px 6px 20px rgba(233, 116, 81, 0.5); }
+            50% { opacity: 0.95; text-shadow: 3px 3px 0 var(--charcoal), 6px 6px 30px rgba(233, 116, 81, 0.8); }
+        }
+
+        .hero-subtitle {
+            font-family: 'Special Elite', cursive;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--sand-beige);
+            margin-bottom: 2rem;
+            letter-spacing: 3px;
+        }
+
+        .handprint {
+            display: inline-block;
+            font-size: 3rem;
+            margin: 0 1rem;
+            opacity: 0.6;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Rock painting style buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cave-button {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--ochre) 0%, var(--burnt-sienna) 100%);
+            color: var(--bone-white);
+            border: 3px solid var(--charcoal);
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 
+                5px 5px 0 var(--charcoal),
+                5px 5px 20px rgba(0,0,0,0.5);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cave-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cave-button:hover::before {
+            left: 100%;
+        }
+
+        .cave-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 
+                7px 7px 0 var(--charcoal),
+                7px 7px 25px rgba(0,0,0,0.7);
+        }
+
+        .cave-button:active {
+            transform: translate(3px, 3px);
+            box-shadow: 
+                2px 2px 0 var(--charcoal),
+                2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Section styling */
+        .section {
+            padding: 5rem 2rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .section-title {
+            font-family: 'Caveat', cursive;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            text-align: center;
+            color: var(--ochre);
+            margin-bottom: 3rem;
+            position: relative;
+            text-shadow: 2px 2px 4px var(--charcoal);
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: '🦴';
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.5;
+        }
+
+        .section-title::before {
+            left: -2rem;
+            transform: rotate(-20deg);
+        }
+
+        .section-title::after {
+            right: -2rem;
+            transform: rotate(20deg);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* About Section - Rock Painting Style */
+        .about-content {
+            background: rgba(74, 52, 40, 0.6);
+            border: 5px solid var(--rock-gray);
+            border-radius: 20px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                inset 0 0 50px rgba(0,0,0,0.3),
+                0 10px 50px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .about-content::before {
+            content: '👤';
+            position: absolute;
+            top: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4rem;
+            opacity: 0.3;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--bone-white);
+            text-align: center;
+        }
+
+        .interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .interest-tag {
+            background: linear-gradient(135deg, var(--rock-gray) 0%, var(--cave-brown) 100%);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            border: 2px solid var(--ochre);
+            font-size: 1rem;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .interest-tag:hover {
+            transform: translateY(-5px) rotate(2deg);
+            box-shadow: 5px 5px 20px rgba(204, 119, 34, 0.5);
+        }
+
+        /* Skills Section - Cave Paintings Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-card {
+            background: rgba(106, 93, 84, 0.4);
+            border: 4px solid var(--ochre);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(233, 116, 81, 0.1) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .skill-card:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: var(--burnt-sienna);
+            box-shadow: 0 15px 40px rgba(204, 119, 34, 0.5);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-name {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            color: var(--ochre);
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-items {
+            list-style: none;
+            color: var(--sand-beige);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Projects Section - Rock Tablets */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, rgba(74, 52, 40, 0.8) 0%, rgba(42, 24, 16, 0.8) 100%);
+            border: 5px solid var(--rock-gray);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--ochre), var(--burnt-sienna), var(--ochre));
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) rotate(-1deg);
+            box-shadow: 0 20px 50px rgba(204, 119, 34, 0.4);
+            border-color: var(--ochre);
+        }
+
+        .project-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            color: var(--ochre);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-title:hover {
+            color: var(--burnt-sienna);
+            text-shadow: 0 0 10px rgba(233, 116, 81, 0.5);
+        }
+
+        .project-subtitle {
+            font-size: 0.9rem;
+            color: var(--sand-beige);
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .project-description {
+            color: var(--bone-white);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-badge {
+            background: rgba(204, 119, 34, 0.3);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid var(--ochre);
+        }
+
+        /* Experience Section - Timeline Cave Paintings */
+        .timeline {
+            position: relative;
+            padding-left: 4rem;
+            margin-top: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(180deg, var(--ochre), var(--burnt-sienna));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            background: rgba(74, 52, 40, 0.6);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--ochre);
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item::before {
+            content: '🔥';
+            position: absolute;
+            left: -3.5rem;
+            top: 2rem;
+            font-size: 2rem;
+            background: var(--cave-dark);
+            padding: 0.5rem;
+            border-radius: 50%;
+            border: 3px solid var(--ochre);
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
+            border-left-color: var(--burnt-sienna);
+            box-shadow: 10px 10px 30px rgba(204, 119, 34, 0.3);
+        }
+
+        .timeline-date {
+            font-family: 'Special Elite', cursive;
+            color: var(--ochre);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            color: var(--burnt-sienna);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-company {
+            color: var(--sand-beige);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-description {
+            color: var(--bone-white);
+            line-height: 1.6;
+        }
+
+        .timeline-description li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section - Sacred Fire */
+        .contact-section {
+            background: radial-gradient(ellipse at center, rgba(233, 116, 81, 0.2) 0%, transparent 70%);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: rgba(74, 52, 40, 0.8);
+            border: 3px solid var(--ochre);
+            border-radius: 50px;
+            color: var(--bone-white);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .contact-link:hover {
+            transform: translateY(-5px);
+            background: rgba(204, 119, 34, 0.4);
+            box-shadow: 5px 10px 30px rgba(233, 116, 81, 0.5);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+        }
+
+        /* Footer - Cave Floor */
+        .footer {
+            background: var(--charcoal);
+            padding: 2rem;
+            text-align: center;
+            border-top: 5px solid var(--ochre);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '🦴 🪨 🔥 🦴 🪨 🔥';
+            position: absolute;
+            top: -1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+
+        .footer-text {
+            color: var(--sand-beige);
+            font-size: 1rem;
+        }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--ochre), var(--burnt-sienna));
+            border: 3px solid var(--charcoal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px) rotate(360deg);
+            box-shadow: 5px 10px 30px rgba(204, 119, 34, 0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .timeline {
+                padding-left: 2rem;
+            }
+            
+            .timeline::before {
+                left: 0.5rem;
+            }
+            
+            .timeline-item::before {
+                left: -2rem;
+                font-size: 1.5rem;
+            }
+            
+            .projects-grid,
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading animation */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: slideIn 0.8s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating particles -->
+    <div class="particle" style="left: 10%; animation-duration: 15s; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 25%; animation-duration: 20s; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 40%; animation-duration: 18s; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 60%; animation-duration: 22s; animation-delay: 1s;"></div>
+    <div class="particle" style="left: 75%; animation-duration: 16s; animation-delay: 3s;"></div>
+    <div class="particle" style="left: 90%; animation-duration: 19s; animation-delay: 5s;"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Animated cave animals -->
+        <div class="cave-drawing mammoth">🦣</div>
+        <div class="cave-drawing deer">🦌</div>
+        <div class="cave-drawing bird">🦅</div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">Samarth Bharadwaj</h1>
+            <p class="hero-subtitle">
+                <span class="handprint">🖐️</span>
+                FRESH GRADUATE ENGINEER
+                <span class="handprint">🖐️</span>
+            </p>
+            <p style="font-size: 1.3rem; margin-bottom: 2rem; color: var(--sand-beige);">
+                Ancient Wisdom | Modern Code
+            </p>
+            <div class="cta-buttons">
+                <a href="#about" class="cave-button">🦴 Discover My Story</a>
+                <a href="#projects" class="cave-button">🔥 View My Work</a>
+                <a href="#contact" class="cave-button">📯 Connect</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">The Origin Story</h2>
+            <div class="about-content animate-in">
+                <p class="about-text">
+                    🎓 <strong>Recent B.E. Graduate</strong> from BMS College of Engineering (2025)<br><br>
+                    
+                    Like ancient cave painters who documented their world, I craft digital solutions that tell stories through code. 
+                    With a foundation in <strong>Web Development, Machine Learning, and Cloud Computing</strong>, I blend prehistoric 
+                    wisdom with cutting-edge technology.<br><br>
+                    
+                    🚀 <strong>Actively seeking opportunities</strong> in Software Engineering, Backend Development, or ML roles where 
+                    I can contribute from day one.<br><br>
+                    
+                    💼 <strong>3 technical internships</strong> | 📚 <strong>Multiple certifications</strong> | 
+                    🏗️ <strong>Production-ready projects</strong>
+                </p>
+                
+                <div class="interests">
+                    <div class="interest-tag">💻 Web Development</div>
+                    <div class="interest-tag">🤖 Machine Learning & AI</div>
+                    <div class="interest-tag">🏗️ Software Development</div>
+                    <div class="interest-tag">☁️ Cloud Computing</div>
+                    <div class="interest-tag">📊 Data Analytics</div>
+                    <div class="interest-tag">🔬 Data Science</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title">Ancient Tools & Modern Magic 🔥</h2>
+            
+            <!-- Languages & Core Tools -->
+            <h3 style="text-align: center; font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--ochre); margin: 3rem 0 2rem;">
+                💻 Languages & Core Tools
+            </h3>
+            <div class="skills-grid" style="margin-bottom: 4rem;">
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">☕</div>
+                    <h3 class="skill-name">Java</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Backend Development</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🐹</div>
+                    <h3 class="skill-name">Go</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Concurrent Systems</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🐍</div>
+                    <h3 class="skill-name">Python</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">ML & Scripting</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">⚡</div>
+                    <h3 class="skill-name">JavaScript</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Full Stack Dev</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🔧</div>
+                    <h3 class="skill-name">C++</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">System Programming</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">📊</div>
+                    <h3 class="skill-name">SQL</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Database Queries</p>
+                </div>
+            </div>
+
+            <!-- Frontend & UI -->
+            <h3 style="text-align: center; font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--ochre); margin: 3rem 0 2rem;">
+                🎨 Frontend & UI
+            </h3>
+            <div class="skills-grid" style="margin-bottom: 4rem;">
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">⚛️</div>
+                    <h3 class="skill-name">React</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Component Library</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🟢</div>
+                    <h3 class="skill-name">Node.js</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Runtime Environment</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">📄</div>
+                    <h3 class="skill-name">HTML5</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Markup Language</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🎨</div>
+                    <h3 class="skill-name">CSS3</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Styling & Animation</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🅱️</div>
+                    <h3 class="skill-name">Bootstrap</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">UI Framework</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🌊</div>
+                    <h3 class="skill-name">Tailwind CSS</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Utility-First CSS</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">⚡</div>
+                    <h3 class="skill-name">Vite</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Build Tool</p>
+                </div>
+            </div>
+
+            <!-- Backend & Systems -->
+            <h3 style="text-align: center; font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--ochre); margin: 3rem 0 2rem;">
+                ⚙️ Backend & Systems
+            </h3>
+            <div class="skills-grid" style="margin-bottom: 4rem;">
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🍃</div>
+                    <h3 class="skill-name">Spring Boot</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Java Framework</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🌶️</div>
+                    <h3 class="skill-name">Flask</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Python Micro-Framework</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">⚡</div>
+                    <h3 class="skill-name">FastAPI</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Modern Python API</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🚂</div>
+                    <h3 class="skill-name">Express.js</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Node.js Framework</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">📊</div>
+                    <h3 class="skill-name">GraphQL</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Query Language</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🔄</div>
+                    <h3 class="skill-name">REST APIs</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">API Architecture</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🌐</div>
+                    <h3 class="skill-name">Nginx</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Web Server</p>
+                </div>
+            </div>
+
+            <!-- Database & Storage -->
+            <h3 style="text-align: center; font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--ochre); margin: 3rem 0 2rem;">
+                🗄️ Database & Storage
+            </h3>
+            <div class="skills-grid" style="margin-bottom: 4rem;">
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🐘</div>
+                    <h3 class="skill-name">PostgreSQL</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Relational Database</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🐬</div>
+                    <h3 class="skill-name">MySQL</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">SQL Database</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🍃</div>
+                    <h3 class="skill-name">MongoDB</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">NoSQL Database</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">⚡</div>
+                    <h3 class="skill-name">Redis</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">In-Memory Cache</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">⚙️</div>
+                    <h3 class="skill-name">DynamoDB</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">AWS NoSQL</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">💾</div>
+                    <h3 class="skill-name">SQLite</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Embedded Database</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🔥</div>
+                    <h3 class="skill-name">Firebase</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Real-time Database</p>
+                </div>
+            </div>
+
+            <!-- Development Tools -->
+            <h3 style="text-align: center; font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--ochre); margin: 3rem 0 2rem;">
+                🛠️ Development Tools
+            </h3>
+            <div class="skills-grid" style="margin-bottom: 4rem;">
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">📦</div>
+                    <h3 class="skill-name">Git</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Version Control</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">😺</div>
+                    <h3 class="skill-name">GitHub</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Code Repository</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">💻</div>
+                    <h3 class="skill-name">VS Code</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Code Editor</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">📮</div>
+                    <h3 class="skill-name">Postman</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">API Testing</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🐧</div>
+                    <h3 class="skill-name">Linux</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Operating System</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">⌨️</div>
+                    <h3 class="skill-name">Bash</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Shell Scripting</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">📝</div>
+                    <h3 class="skill-name">Vim</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Text Editor</p>
+                </div>
+            </div>
+
+            <!-- Cloud & DevOps -->
+            <h3 style="text-align: center; font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--ochre); margin: 3rem 0 2rem;">
+                ☁️ Cloud & DevOps
+            </h3>
+            <div class="skills-grid" style="margin-bottom: 4rem;">
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🐳</div>
+                    <h3 class="skill-name">Docker</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Containerization</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">☁️</div>
+                    <h3 class="skill-name">AWS</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Cloud Platform</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🌩️</div>
+                    <h3 class="skill-name">GCP</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Google Cloud</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">⚓</div>
+                    <h3 class="skill-name">Kubernetes</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Container Orchestration</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🏗️</div>
+                    <h3 class="skill-name">Terraform</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Infrastructure as Code</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">👷</div>
+                    <h3 class="skill-name">Jenkins</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">CI/CD Pipeline</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🤖</div>
+                    <h3 class="skill-name">GitHub Actions</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Automation</p>
+                </div>
+            </div>
+
+            <!-- Frameworks & Libraries -->
+            <h3 style="text-align: center; font-family: 'Caveat', cursive; font-size: 2.5rem; color: var(--ochre); margin: 3rem 0 2rem;">
+                🧰 Frameworks & Libraries
+            </h3>
+            <div class="skills-grid" style="margin-bottom: 4rem;">
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🧠</div>
+                    <h3 class="skill-name">TensorFlow</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Deep Learning</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">📚</div>
+                    <h3 class="skill-name">Scikit-learn</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Machine Learning</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🔥</div>
+                    <h3 class="skill-name">PyTorch</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Neural Networks</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">🐼</div>
+                    <h3 class="skill-name">Pandas</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Data Analysis</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">📊</div>
+                    <h3 class="skill-name">NumPy</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Numerical Computing</p>
+                </div>
+                <div class="skill-card animate-in">
+                    <div class="skill-icon">📨</div>
+                    <h3 class="skill-name">Kafka</h3>
+                    <p style="color: var(--sand-beige); font-size: 0.9rem;">Event Streaming</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section class="section" style="background: radial-gradient(ellipse at center, rgba(233, 116, 81, 0.1) 0%, transparent 70%);">
+        <div class="container">
+            <h2 class="section-title">Sacred Scrolls (Certifications)</h2>
+            <p style="text-align: center; color: var(--sand-beige); margin-bottom: 2rem; font-size: 1.1rem;">
+                🎖️ Click any badge to view the certificate 🎖️
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto;">
+                
+                <!-- Oracle Data Science -->
+                <a href="https://catalog-education.oracle.com/pls/certview/sharebadge?id=719ED7524303EDD3BCF102B13BFB827143D96A8BC04B994233FFC27C36E3390E" target="_blank" style="text-decoration: none;">
+                    <div class="skill-card" style="cursor: pointer; height: 100%;">
+                        <div class="skill-icon">🏛️</div>
+                        <h3 class="skill-name" style="font-size: 1.5rem;">Oracle Cloud</h3>
+                        <p style="color: var(--sand-beige); margin: 1rem 0;">OCI 2025 Data Science Professional</p>
+                        <div style="background: rgba(248, 0, 0, 0.2); padding: 0.5rem 1rem; border-radius: 20px; border: 2px solid #F80000; margin-top: 1rem;">
+                            <span style="color: var(--bone-white);">✅ Certified</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Oracle Gen AI -->
+                <a href="https://catalog-education.oracle.com/pls/certview/sharebadge?id=90CAB2F3D43BAFCCF0BBE0AB2F04A2FC3522923ADF40C26DA5B6F2035C8B3441" target="_blank" style="text-decoration: none;">
+                    <div class="skill-card" style="cursor: pointer; height: 100%;">
+                        <div class="skill-icon">🤖</div>
+                        <h3 class="skill-name" style="font-size: 1.5rem;">Oracle Cloud</h3>
+                        <p style="color: var(--sand-beige); margin: 1rem 0;">OCI 2025 Generative AI Professional</p>
+                        <div style="background: rgba(248, 0, 0, 0.2); padding: 0.5rem 1rem; border-radius: 20px; border: 2px solid #F80000; margin-top: 1rem;">
+                            <span style="color: var(--bone-white);">✅ Certified</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- HTML CSS JavaScript -->
+                <a href="https://www.udemy.com/certificate/UC-27557b44-7c1f-4d70-b1a6-1633ceebc3d0/" target="_blank" style="text-decoration: none;">
+                    <div class="skill-card" style="cursor: pointer; height: 100%;">
+                        <div class="skill-icon">🌐</div>
+                        <h3 class="skill-name" style="font-size: 1.5rem;">Web Development</h3>
+                        <p style="color: var(--sand-beige); margin: 1rem 0;">HTML, CSS & JavaScript - Udemy</p>
+                        <div style="background: rgba(255, 111, 0, 0.2); padding: 0.5rem 1rem; border-radius: 20px; border: 2px solid #FF6F00; margin-top: 1rem;">
+                            <span style="color: var(--bone-white);">✅ Certified</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Java Programming -->
+                <a href="https://www.udemy.com/certificate/UC-26099806-93ca-4451-8a98-20eb39a083a3/" target="_blank" style="text-decoration: none;">
+                    <div class="skill-card" style="cursor: pointer; height: 100%;">
+                        <div class="skill-icon">☕</div>
+                        <h3 class="skill-name" style="font-size: 1.5rem;">Java Programming</h3>
+                        <p style="color: var(--sand-beige); margin: 1rem 0;">Complete Java Programming Course</p>
+                        <div style="background: rgba(0, 115, 150, 0.2); padding: 0.5rem 1rem; border-radius: 20px; border: 2px solid #007396; margin-top: 1rem;">
+                            <span style="color: var(--bone-white);">✅ Certified</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Google Data Analytics - Placeholder -->
+                <div class="skill-card" style="opacity: 0.7; height: 100%;">
+                    <div class="skill-icon">📊</div>
+                    <h3 class="skill-name" style="font-size: 1.5rem;">Google Analytics</h3>
+                    <p style="color: var(--sand-beige); margin: 1rem 0;">Google Data Analytics Professional Certificate</p>
+                    <div style="background: rgba(66, 133, 244, 0.2); padding: 0.5rem 1rem; border-radius: 20px; border: 2px solid #4285F4; margin-top: 1rem;">
+                        <span style="color: var(--bone-white);">🔗 Add Link</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title">Cave Carvings (Projects)</h2>
+            <div class="projects-grid">
+                <div class="project-card animate-in">
+                    <div class="project-icon">🌾</div>
+                    <a href="https://github.com/samarth-git27/Crop-Recommendation-System-Using-Machine-Learning" target="_blank" style="text-decoration: none;">
+                        <h3 class="project-title" style="cursor: pointer; transition: color 0.3s;">Crop Recommendation System</h3>
+                    </a>
+                    <p class="project-subtitle">Jan 2026</p>
+                    <p style="font-style: italic; color: var(--burnt-sienna); margin-bottom: 1rem;">
+                        💡 Smart crop recommendation powered by ML to optimize selection based on soil and weather conditions
+                    </p>
+                    <p class="project-description">
+                        Trained ML models to recommend crops using environmental and soil metrics with structured pipelines. 
+                        Deployed REST API enabling real-time predictions for user-entered features.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Scikit-learn</span>
+                        <span class="tech-badge">Flask</span>
+                    </div>
+                    <a href="https://github.com/samarth-git27/Crop-Recommendation-System-Using-Machine-Learning" target="_blank" class="cave-button" style="margin-top: 1rem; padding: 0.7rem 1.5rem; font-size: 0.95rem; display: inline-block;">
+                        💻 View Code
+                    </a>
+                </div>
+
+                <div class="project-card animate-in">
+                    <div class="project-icon">☁️</div>
+                    <a href="https://github.com/samarth-git27/TaskFlow-Cloudflare-Workers-Task-Manager" target="_blank" style="text-decoration: none;">
+                        <h3 class="project-title" style="cursor: pointer; transition: color 0.3s;">TaskFlow - Serverless Task Manager</h3>
+                    </a>
+                    <p class="project-subtitle">Dec 2025</p>
+                    <p style="font-style: italic; color: var(--burnt-sienna); margin-bottom: 1rem;">
+                        💡 Full-stack serverless task manager built using Cloudflare Workers and D1 database
+                    </p>
+                    <p class="project-description">
+                        Built a modern task management system leveraging Cloudflare's edge computing platform. 
+                        Implements serverless architecture with global distribution and instant deployments.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">TypeScript</span>
+                        <span class="tech-badge">Cloudflare Workers</span>
+                        <span class="tech-badge">D1</span>
+                    </div>
+                    <a href="https://github.com/samarth-git27/TaskFlow-Cloudflare-Workers-Task-Manager" target="_blank" class="cave-button" style="margin-top: 1rem; padding: 0.7rem 1.5rem; font-size: 0.95rem; display: inline-block;">
+                        💻 View Code
+                    </a>
+                </div>
+                
+                <div class="project-card animate-in">
+                    <div class="project-icon">🛒</div>
+                    <a href="https://github.com/samarth-git27/Retail-Product-Detection-Clustering-System" target="_blank" style="text-decoration: none;">
+                        <h3 class="project-title" style="cursor: pointer; transition: color 0.3s;">Retail Product Detection System</h3>
+                    </a>
+                    <p class="project-subtitle">Dec 2025</p>
+                    <p style="font-style: italic; color: var(--burnt-sienna); margin-bottom: 1rem;">
+                        💡 Computer vision pipeline for retail shelf analytics with object detection and clustering
+                    </p>
+                    <p class="project-description">
+                        Implemented full CV pipeline using YOLOv8n for object detection, ResNet50 for feature embedding, 
+                        and DBSCAN for similarity clustering and product grouping.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">YOLOv8</span>
+                        <span class="tech-badge">ResNet50</span>
+                        <span class="tech-badge">DBSCAN</span>
+                    </div>
+                    <a href="https://github.com/samarth-git27/Retail-Product-Detection-Clustering-System" target="_blank" class="cave-button" style="margin-top: 1rem; padding: 0.7rem 1.5rem; font-size: 0.95rem; display: inline-block;">
+                        💻 View Code
+                    </a>
+                </div>
+                
+                <div class="project-card animate-in">
+                    <div class="project-icon">📝</div>
+                    <a href="https://github.com/samarth-git27/Real-Time-Collaborative-Editor" target="_blank" style="text-decoration: none;">
+                        <h3 class="project-title" style="cursor: pointer; transition: color 0.3s;">Real-Time Collaborative Editor</h3>
+                    </a>
+                    <p class="project-subtitle">Jul 2025</p>
+                    <p style="font-style: italic; color: var(--burnt-sienna); margin-bottom: 1rem;">
+                        💡 Real-time collaborative note-taking tool with WebSocket-powered live synchronization
+                    </p>
+                    <p class="project-description">
+                        Built real-time collaborative editor enabling multiple users to edit simultaneously with instant sync. 
+                        Implemented using WebSockets for real-time communication and conflict resolution.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Node.js</span>
+                        <span class="tech-badge">Express</span>
+                        <span class="tech-badge">WebSockets</span>
+                        <span class="tech-badge">JavaScript</span>
+                    </div>
+                    <a href="https://github.com/samarth-git27/Real-Time-Collaborative-Editor" target="_blank" class="cave-button" style="margin-top: 1rem; padding: 0.7rem 1.5rem; font-size: 0.95rem; display: inline-block;">
+                        💻 View Code
+                    </a>
+                </div>
+
+                <div class="project-card animate-in">
+                    <div class="project-icon">📚</div>
+                    <a href="https://github.com/samarth-git27/RESTful-API-for-a-Library-or-Inventory-System-with-full-CRUD-functionality-" target="_blank" style="text-decoration: none;">
+                        <h3 class="project-title" style="cursor: pointer; transition: color 0.3s;">Library Management REST API</h3>
+                    </a>
+                    <p class="project-subtitle">May 2025</p>
+                    <p style="font-style: italic; color: var(--burnt-sienna); margin-bottom: 1rem;">
+                        💡 RESTful API for library/inventory system with complete CRUD operations
+                    </p>
+                    <p class="project-description">
+                        Built a comprehensive REST API for library management with full CRUD functionality using Node.js, 
+                        Express, and MongoDB with proper error handling and validation.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Node.js</span>
+                        <span class="tech-badge">Express</span>
+                        <span class="tech-badge">MongoDB</span>
+                    </div>
+                    <a href="https://github.com/samarth-git27/RESTful-API-for-a-Library-or-Inventory-System-with-full-CRUD-functionality-" target="_blank" class="cave-button" style="margin-top: 1rem; padding: 0.7rem 1.5rem; font-size: 0.95rem; display: inline-block;">
+                        💻 View Code
+                    </a>
+                </div>
+
+                <div class="project-card animate-in">
+                    <div class="project-icon">📅</div>
+                    <a href="https://github.com/samarth-git27/Custom-Event-Calendar" target="_blank" style="text-decoration: none;">
+                        <h3 class="project-title" style="cursor: pointer; transition: color 0.3s;">Custom Event Calendar</h3>
+                    </a>
+                    <p class="project-subtitle">Nov 2025</p>
+                    <p style="font-style: italic; color: var(--burnt-sienna); margin-bottom: 1rem;">
+                        💡 Dynamic calendar app with recurring events, drag-and-drop, and local storage
+                    </p>
+                    <p class="project-description">
+                        Interactive calendar application built with React supporting event management, recurring events, 
+                        drag-and-drop rescheduling, and persistent local storage.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">React</span>
+                        <span class="tech-badge">JavaScript</span>
+                        <span class="tech-badge">Local Storage</span>
+                    </div>
+                    <a href="https://github.com/samarth-git27/Custom-Event-Calendar" target="_blank" class="cave-button" style="margin-top: 1rem; padding: 0.7rem 1.5rem; font-size: 0.95rem; display: inline-block;">
+                        💻 View Code
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+        <div class="container">
+            <h2 class="section-title">Journey Through Time</h2>
+            <div class="timeline">
+                <div class="timeline-item animate-in">
+                    <div class="timeline-date">Apr 2025 – May 2025</div>
+                    <h3 class="timeline-title">Software Developer Intern</h3>
+                    <p class="timeline-company">CodTech IT Solutions | Remote</p>
+                    <ul class="timeline-description">
+                        <li>Built real-time collaborative editor and modular REST APIs</li>
+                        <li>Participated in code reviews, refactoring sessions, and debugging</li>
+                        <li>Applied SDLC, Git workflows, and structured review practices</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item animate-in">
+                    <div class="timeline-date">Jul 2024 – Sep 2024</div>
+                    <h3 class="timeline-title">Cloud Computing Intern</h3>
+                    <p class="timeline-company">1stop.ai, IIT Roorkee E-Cell | Remote</p>
+                    <ul class="timeline-description">
+                        <li>Deployed secure backend systems on AWS Elastic Beanstalk with CI/CD</li>
+                        <li>Configured distributed authentication using AWS Cognito</li>
+                        <li>Implemented scalable system components with RDS integration</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item animate-in">
+                    <div class="timeline-date">Apr 2024 – Jul 2024</div>
+                    <h3 class="timeline-title">Network Engineering Trainee</h3>
+                    <p class="timeline-company">Vigven Tech Mark Pvt Ltd | Bengaluru, India</p>
+                    <ul class="timeline-description">
+                        <li>Automated interoperability testing using Python scripts</li>
+                        <li>Debugged system-level logs and validated protocols</li>
+                        <li>Documented reproducible test cases</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Light the Signal Fire</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 2rem; color: var(--sand-beige);">
+                🟢 <strong>Open to Full-time Opportunities</strong> | Immediate Joiner
+            </p>
+            <div class="contact-links">
+                <a href="/cdn-cgi/l/email-protection#2e5d4f434f5c5a464c464f5c4f4a594f441e1d6e49434f4742004d4143" class="contact-link">
+                    <span class="contact-icon">📧</span>
+                    <span>Email</span>
+                </a>
+                <a href="https://linkedin.com/in/samarth-j-bharadwaj-356842323" target="_blank" class="contact-link">
+                    <span class="contact-icon">💼</span>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://github.com/samarth-git27" target="_blank" class="contact-link">
+                    <span class="contact-icon">💻</span>
+                    <span>GitHub</span>
+                </a>
+                <a href="tel:+919880521222" class="contact-link">
+                    <span class="contact-icon">📱</span>
+                    <span>+91 9880521222</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer-text">
+            © 2025 Samarth Bharadwaj | Crafted with ancient wisdom and modern code ✨
+        </p>
+        <p class="footer-text" style="margin-top: 1rem; opacity: 0.7;">
+            From the caves of the past to the cloud of the future 🦣 → ☁️
+        </p>
+    </footer>
+
+    <!-- Scroll to top button -->
+    <div class="scroll-top" id="scrollTop">
+        ⬆️
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll to top button
+        const scrollTop = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+
+        scrollTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(el);
+        });
+
+        // Parallax effect for cave animals
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const mammoth = document.querySelector('.mammoth');
+            const deer = document.querySelector('.deer');
+            const bird = document.querySelector('.bird');
+            
+            if (mammoth) mammoth.style.transform = `translateX(${scrolled * 0.5}px)`;
+            if (deer) deer.style.transform = `translateX(${-scrolled * 
