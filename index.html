@@ -916,190 +916,137 @@
 
     <!-- Projects Section -->
     <section id="projects" class="section">
-        <div class="container">
-            <h2 class="section-title">Cave Carvings (Projects)</h2>
-            <div class="projects-grid">
-                <div class="project-card animate-in">
-    <div class="project-icon">🌾</div>
-    <a href="https://github.com/samarth-git27/Crop-Recommendation-System-Using-Machine-Learning" target="_blank" style="text-decoration: none;">
-        <h3 class="project-title" style="cursor: pointer; transition: color 0.3s;">
-            Crop Recommendation System
-        </h3>
-    </a>
-    <p class="project-subtitle">Jan 2026</p>
-    
-    <p style="font-style: italic; color: var(--burnt-sienna); margin-bottom: 1rem;">
-        💡 ML-based crop recommendation using soil & weather data
-    </p>
-    
-    <p class="project-description">
-        Built ML models and deployed a REST API for real-time crop predictions.
-    </p>
-    
-    <div class="project-tech">
-        <span class="tech-badge">Python</span>
-        <span class="tech-badge">Scikit-learn</span>
-        <span class="tech-badge">Flask</span>
-    </div>
-    
-    <a href="https://github.com/samarth-git27/Crop-Recommendation-System-Using-Machine-Learning" 
-       target="_blank" 
-       class="cave-button" 
-       style="margin-top: 1rem; padding: 0.7rem 1.5rem; font-size: 0.95rem; display: inline-block;">
-        💻 View Code
-    </a>
-</div>
-                  <div class="container">
+    <div class="container">
         <h2 class="section-title">Cave Carvings (Projects)</h2>
-        <div class="projects-grid">
 
-            <!-- ✈️ Flight Delay Project (ADDED) -->
-            <div class="project-card animate-in">
-                <div class="project-icon">✈️</div>
-                <a href="https://github.com/samarth-git27/Flight-Delay-Prediction-using-Deep-Learning" target="_blank" style="text-decoration: none;">
-                    <h3 class="project-title" style="cursor: pointer; transition: color 0.3s;">
-                        Flight Delay Prediction (Deep Learning)
-                    </h3>
-                </a>
-                <p class="project-subtitle">Final Year Project • Feb 2026</p>
-                <p style="font-style: italic; color: var(--burnt-sienna); margin-bottom: 1rem;">
-                    💡 Predicting flight delays using deep learning models trained on large-scale US flight data
-                </p>
-                <p class="project-description">
-                    Built a deep learning-based prediction system using historical flight data (2013–2018) 
-                    to forecast delays. Implemented data preprocessing pipelines, feature engineering, 
-                    and trained LSTM-based models to capture temporal patterns in flight schedules.
-                </p>
-                <div class="project-tech">
-                    <span class="tech-badge">Python</span>
-                    <span class="tech-badge">TensorFlow</span>
-                    <span class="tech-badge">LSTM</span>
-                    <span class="tech-badge">Pandas</span>
-                </div>
-                <a href="https://github.com/samarth-git27/Flight-Delay-Prediction-using-Deep-Learning" target="_blank" class="cave-button" style="margin-top: 1rem; padding: 0.7rem 1.5rem; font-size: 0.95rem; display: inline-block;">
-                    💻 View Code
-                </a>
-            </div>
+        <!-- ✅ FIX: Equal height layout -->
+        <div class="projects-grid" style="align-items: stretch;">
 
-                <div class="project-card animate-in">
-                    <div class="project-icon">☁️</div>
-                    <a href="https://github.com/samarth-git27/TaskFlow-Cloudflare-Workers-Task-Manager" target="_blank" style="text-decoration: none;">
-                        <h3 class="project-title" style="cursor: pointer; transition: color 0.3s;">TaskFlow - Serverless Task Manager</h3>
+            <!-- ✈️ Flight Delay -->
+            <div class="project-card animate-in" style="display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <div class="project-icon">✈️</div>
+                    <a href="https://github.com/samarth-git27/Flight-Delay-Prediction-using-Deep-Learning" target="_blank">
+                        <h3 class="project-title">Flight Delay Prediction</h3>
                     </a>
-                    <p class="project-subtitle">Dec 2025</p>
-                    <p style="font-style: italic; color: var(--burnt-sienna); margin-bottom: 1rem;">
-                        💡 Full-stack serverless task manager built using Cloudflare Workers and D1 database
-                    </p>
+                    <p class="project-subtitle">Final Year Project • 2026</p>
                     <p class="project-description">
-                        Built a modern task management system leveraging Cloudflare's edge computing platform. 
-                        Implements serverless architecture with global distribution and instant deployments.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-badge">TypeScript</span>
-                        <span class="tech-badge">Cloudflare Workers</span>
-                        <span class="tech-badge">D1</span>
-                    </div>
-                    <a href="https://github.com/samarth-git27/TaskFlow-Cloudflare-Workers-Task-Manager" target="_blank" class="cave-button" style="margin-top: 1rem; padding: 0.7rem 1.5rem; font-size: 0.95rem; display: inline-block;">
-                        💻 View Code
-                    </a>
-                </div>
-                
-                <div class="project-card animate-in">
-                    <div class="project-icon">🛒</div>
-                    <a href="https://github.com/samarth-git27/Retail-Product-Detection-Clustering-System" target="_blank" style="text-decoration: none;">
-                        <h3 class="project-title" style="cursor: pointer; transition: color 0.3s;">Retail Product Detection System</h3>
-                    </a>
-                    <p class="project-subtitle">Dec 2025</p>
-                    <p style="font-style: italic; color: var(--burnt-sienna); margin-bottom: 1rem;">
-                        💡 Computer vision pipeline for retail shelf analytics with object detection and clustering
-                    </p>
-                    <p class="project-description">
-                        Implemented full CV pipeline using YOLOv8n for object detection, ResNet50 for feature embedding, 
-                        and DBSCAN for similarity clustering and product grouping.
+                        Deep learning model (LSTM) to predict flight delays using historical data.
                     </p>
                     <div class="project-tech">
                         <span class="tech-badge">Python</span>
-                        <span class="tech-badge">YOLOv8</span>
-                        <span class="tech-badge">ResNet50</span>
-                        <span class="tech-badge">DBSCAN</span>
+                        <span class="tech-badge">TensorFlow</span>
+                        <span class="tech-badge">LSTM</span>
                     </div>
-                    <a href="https://github.com/samarth-git27/Retail-Product-Detection-Clustering-System" target="_blank" class="cave-button" style="margin-top: 1rem; padding: 0.7rem 1.5rem; font-size: 0.95rem; display: inline-block;">
-                        💻 View Code
-                    </a>
                 </div>
-                
-                <div class="project-card animate-in">
-                    <div class="project-icon">📝</div>
-                    <a href="https://github.com/samarth-git27/Real-Time-Collaborative-Editor" target="_blank" style="text-decoration: none;">
-                        <h3 class="project-title" style="cursor: pointer; transition: color 0.3s;">Real-Time Collaborative Editor</h3>
-                    </a>
-                    <p class="project-subtitle">Jul 2025</p>
-                    <p style="font-style: italic; color: var(--burnt-sienna); margin-bottom: 1rem;">
-                        💡 Real-time collaborative note-taking tool with WebSocket-powered live synchronization
-                    </p>
-                    <p class="project-description">
-                        Built real-time collaborative editor enabling multiple users to edit simultaneously with instant sync. 
-                        Implemented using WebSockets for real-time communication and conflict resolution.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-badge">Node.js</span>
-                        <span class="tech-badge">Express</span>
-                        <span class="tech-badge">WebSockets</span>
-                        <span class="tech-badge">JavaScript</span>
-                    </div>
-                    <a href="https://github.com/samarth-git27/Real-Time-Collaborative-Editor" target="_blank" class="cave-button" style="margin-top: 1rem; padding: 0.7rem 1.5rem; font-size: 0.95rem; display: inline-block;">
-                        💻 View Code
-                    </a>
-                </div>
-
-                <div class="project-card animate-in">
-                    <div class="project-icon">📚</div>
-                    <a href="https://github.com/samarth-git27/RESTful-API-for-a-Library-or-Inventory-System-with-full-CRUD-functionality-" target="_blank" style="text-decoration: none;">
-                        <h3 class="project-title" style="cursor: pointer; transition: color 0.3s;">Library Management REST API</h3>
-                    </a>
-                    <p class="project-subtitle">May 2025</p>
-                    <p style="font-style: italic; color: var(--burnt-sienna); margin-bottom: 1rem;">
-                        💡 RESTful API for library/inventory system with complete CRUD operations
-                    </p>
-                    <p class="project-description">
-                        Built a comprehensive REST API for library management with full CRUD functionality using Node.js, 
-                        Express, and MongoDB with proper error handling and validation.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-badge">Node.js</span>
-                        <span class="tech-badge">Express</span>
-                        <span class="tech-badge">MongoDB</span>
-                    </div>
-                    <a href="https://github.com/samarth-git27/RESTful-API-for-a-Library-or-Inventory-System-with-full-CRUD-functionality-" target="_blank" class="cave-button" style="margin-top: 1rem; padding: 0.7rem 1.5rem; font-size: 0.95rem; display: inline-block;">
-                        💻 View Code
-                    </a>
-                </div>
-
-                <div class="project-card animate-in">
-                    <div class="project-icon">📅</div>
-                    <a href="https://github.com/samarth-git27/Custom-Event-Calendar" target="_blank" style="text-decoration: none;">
-                        <h3 class="project-title" style="cursor: pointer; transition: color 0.3s;">Custom Event Calendar</h3>
-                    </a>
-                    <p class="project-subtitle">Nov 2025</p>
-                    <p style="font-style: italic; color: var(--burnt-sienna); margin-bottom: 1rem;">
-                        💡 Dynamic calendar app with recurring events, drag-and-drop, and local storage
-                    </p>
-                    <p class="project-description">
-                        Interactive calendar application built with React supporting event management, recurring events, 
-                        drag-and-drop rescheduling, and persistent local storage.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-badge">React</span>
-                        <span class="tech-badge">JavaScript</span>
-                        <span class="tech-badge">Local Storage</span>
-                    </div>
-                    <a href="https://github.com/samarth-git27/Custom-Event-Calendar" target="_blank" class="cave-button" style="margin-top: 1rem; padding: 0.7rem 1.5rem; font-size: 0.95rem; display: inline-block;">
-                        💻 View Code
-                    </a>
-                </div>
+                <a href="https://github.com/samarth-git27/Flight-Delay-Prediction-using-Deep-Learning" target="_blank" class="cave-button">💻 View Code</a>
             </div>
+
+            <!-- 🌾 Crop -->
+            <div class="project-card animate-in" style="display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <div class="project-icon">🌾</div>
+                    <a href="https://github.com/samarth-git27/Crop-Recommendation-System-Using-Machine-Learning" target="_blank">
+                        <h3 class="project-title">Crop Recommendation</h3>
+                    </a>
+                    <p class="project-subtitle">2026</p>
+                    <p class="project-description">
+                        ML-based crop recommendation using soil and weather data.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Flask</span>
+                    </div>
+                </div>
+                <a href="https://github.com/samarth-git27/Crop-Recommendation-System-Using-Machine-Learning" target="_blank" class="cave-button">💻 View Code</a>
+            </div>
+
+            <!-- ☁️ TaskFlow -->
+            <div class="project-card animate-in" style="display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <div class="project-icon">☁️</div>
+                    <a href="https://github.com/samarth-git27/TaskFlow-Cloudflare-Workers-Task-Manager" target="_blank">
+                        <h3 class="project-title">TaskFlow</h3>
+                    </a>
+                    <p class="project-subtitle">2025</p>
+                    <p class="project-description">
+                        Serverless task manager built on Cloudflare Workers.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">TypeScript</span>
+                        <span class="tech-badge">Cloudflare</span>
+                    </div>
+                </div>
+                <a href="https://github.com/samarth-git27/TaskFlow-Cloudflare-Workers-Task-Manager" target="_blank" class="cave-button">💻 View Code</a>
+            </div>
+
+            <!-- 🛒 Retail -->
+            <div class="project-card animate-in" style="display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <div class="project-icon">🛒</div>
+                    <a href="https://github.com/samarth-git27/Retail-Product-Detection-Clustering-System" target="_blank">
+                        <h3 class="project-title">Retail Detection</h3>
+                    </a>
+                    <p class="project-subtitle">2025</p>
+                    <p class="project-description">
+                        Computer vision pipeline for product detection and clustering.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">YOLO</span>
+                        <span class="tech-badge">ResNet</span>
+                    </div>
+                </div>
+                <a href="https://github.com/samarth-git27/Retail-Product-Detection-Clustering-System" target="_blank" class="cave-button">💻 View Code</a>
+            </div>
+
+            <!-- 📝 Editor -->
+            <div class="project-card animate-in" style="display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <div class="project-icon">📝</div>
+                    <a href="https://github.com/samarth-git27/Real-Time-Collaborative-Editor" target="_blank">
+                        <h3 class="project-title">Collaborative Editor</h3>
+                    </a>
+                    <p class="project-subtitle">2025</p>
+                    <p class="project-description">
+                        Real-time editor using WebSockets for multi-user sync.
+                    </p>
+                </div>
+                <a href="https://github.com/samarth-git27/Real-Time-Collaborative-Editor" target="_blank" class="cave-button">💻 View Code</a>
+            </div>
+
+            <!-- 📚 Library -->
+            <div class="project-card animate-in" style="display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <div class="project-icon">📚</div>
+                    <a href="https://github.com/samarth-git27/RESTful-API-for-a-Library-or-Inventory-System-with-full-CRUD-functionality-" target="_blank">
+                        <h3 class="project-title">Library API</h3>
+                    </a>
+                    <p class="project-subtitle">2025</p>
+                    <p class="project-description">
+                        REST API with full CRUD operations for library system.
+                    </p>
+                </div>
+                <a href="https://github.com/samarth-git27/RESTful-API-for-a-Library-or-Inventory-System-with-full-CRUD-functionality-" target="_blank" class="cave-button">💻 View Code</a>
+            </div>
+
+            <!-- 📅 Calendar -->
+            <div class="project-card animate-in" style="display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <div class="project-icon">📅</div>
+                    <a href="https://github.com/samarth-git27/Custom-Event-Calendar" target="_blank">
+                        <h3 class="project-title">Event Calendar</h3>
+                    </a>
+                    <p class="project-subtitle">2025</p>
+                    <p class="project-description">
+                        Interactive calendar with drag-drop and local storage.
+                    </p>
+                </div>
+                <a href="https://github.com/samarth-git27/Custom-Event-Calendar" target="_blank" class="cave-button">💻 View Code</a>
+            </div>
+
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Experience Section -->
     <section id="experience" class="section">
